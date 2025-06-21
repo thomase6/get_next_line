@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   extract_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 10:27:14 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/21 10:50:12 by texenber         ###   ########.fr       */
+/*   Created: 2025/06/21 11:54:49 by texenber          #+#    #+#             */
+/*   Updated: 2025/06/21 13:06:54 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdlib.h>
+#include "get_next_line.h"
 
-char	*get_next_line(int fd);
-void	*ft_calloc(size_t count, size_t size);
-char	*ft_strchr(const char *str, unsigned char c);
-size_t	ft_strlen(const char *str);
-char	*ft_strjoin(const char *s1, const char *s2);
+char	*extract_line(char *bigger_buffer)
+{
+	char	*str;
+	size_t	i;
 
-#endif
+	i = 0;
+	if (!ft_strchr(bigger_buffer, '\n')
+	str = malloc((ft_strlen(bigger_buffer) + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (bigger_buffer[i] != '\0' && bigger_buffer[i] != '\n')
+	{
+		str[i] = bigger_buffer[i];
+		i++;
+	}
+	str[i] = '\0';	
+	return (str);
+}
