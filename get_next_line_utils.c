@@ -6,39 +6,19 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:27:39 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/21 13:07:27 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/22 12:44:07 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_calloc(size_t count, size_t size)
+char	*ft_strchr(const char *str, int f)
 {
-	unsigned char	*ptr;
-	size_t			total;
-	size_t			i;
+	size_t	i;
+	char	c;
 
+	c = f;
 	i = 0;
-	if (count == 0 || size == 0)
-		return (malloc (0));
-	total = count * size;
-	if (total / count != size)
-		return (NULL);
-	ptr = malloc(total);
-	if (!ptr)
-		return (NULL);
-	while (i < total)
-		ptr[i++] = 0;
-	return (ptr);
-}
-
-char	*ft_strchr(const char *str, unsigned char c)
-{
-	size_t			i;
-
-	i = 0;
-	if (!str)
-		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == c)
@@ -47,7 +27,7 @@ char	*ft_strchr(const char *str, unsigned char c)
 	}
 	if (str[i] == c)
 		return ((char *)&str[i]);
-	return (0);
+	return (NULL);
 }
 
 size_t	ft_strlen(const char *str)
@@ -68,8 +48,8 @@ char	*ft_strjoin(const char *s1, const char *s2)
 
 	i = 0;
 	j = 0;
-	if (s1 && !s2)
-		return ((char *)s1);
+	if (!s1 || !s2)
+		return (NULL);
 	tmp = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * (sizeof(char)));
 	if (!tmp)
 		return (NULL);
@@ -102,14 +82,26 @@ char	*ft_strdup(const char *str)
 	return (tmp);
 }
 
-#include <stdio.h>
-int main(void)
+char	*ft_substr(const char *str, unsigned int start, size_t len)
 {
-    char    src[] = "I HAVE AN ARMY!!!!!!";
+	size_t	i;
+	char	*tmp;
 
-    printf("src = %s\n", src);
-    char *target = ft_strdup(src);
-    printf("dst = %s\n", target);
-    free (target);
+	i = 0;
+	if (!str)
+		return (NULL);
+	if (start > ft_strlen(str))
+		return (ft_strdup(""));
+	if (len > ft_strlen(str) - start)
+		len = ft_strlen(str) - start;
+	tmp = malloc((len + 1) * sizeof(char));
+	if (!tmp)
+		return (NULL);
+	while (i < len)
+	{
+		tmp[i] = str[start + i];
+		i++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
 }
-

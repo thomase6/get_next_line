@@ -6,84 +6,80 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:28:15 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/21 13:07:44 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/22 12:41:16 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-obtained_remaining // this function is meant to take anything after the '\n' and store it into the bigge						r_buffer.
-extract_line // this function is meant to take everything before a '\n' and put it in the line string.
-static char	*append_buffer(char *bigger_buffer, char *buffer)
+static char	*set_line(char *line)
 {
 	char	*tmp;
+	ssize_t	i;
 
-	tmp = ft_strjoin(bigger_buffer, buffer);
-	return (free (bigger_buffer), tmp);
+	i = 0;
+	while (line[i] != '\n' && line[i] != '\0')
+		i++;
+	if (line[i] == '\0' || line[i + 1] == '\0')
+		return (NULL);
+	tmp = ft_substr(line, (i + 1), (ft_strlen(line) - i));
+	if (tmp[0] == '\0')
+	{
+		free(tmp);
+		tmp = NULL;
+	}
+	line[i + 1] = '\0';
+	return (tmp);
 }
 
-static char	*read_from_file(char *bigger_buffer, int fd)
+static char	*read_from_file(int fd, char *leftover, char *buffer)
 {
-	char		*buffer;
-	int			bytes_read;
+	char		*tmp;
+	ssize_t		bytes_read;
 
-	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
-	if (!buffer)
-		return (NULL);
 	bytes_read = 1;
 	while (bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (free(buffer), NULL);
+			return (free(leftover), NULL);
+		else if (bytes_read == 0)
+			break ;
 		buffer[bytes_read] = '\0';
-		bigger_buffer = append_buffer(bigger_buffer, buffer);
-		if (ft_strchr(bigger_buffer, '\n'))
-			break;
+		if (!leftover)
+			leftover = ft_strdup("");
+		tmp = leftover;
+		leftover = ft_strjoin(tmp, buffer);
+		free(tmp);
+		tmp = NULL;
+		if (ft_strchr(buffer, '\n'))
+			break ;
 	}
-	free (buffer);
-	return (bigger_buffer);
+	return (leftover);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*bigger_buffer;
-	char 		*line;
+	static char	*leftover;
+	char		*buffer;
+	char		*line;
 
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (NULL);
-	if (!bigger_buffer)
-		bigger_buffer = malloc(1 * sizeof(char));
-	if (!ft_strchr(bigger_buffer, '\n'))
-		bigger_buffer = read_from_file(bigger_buffer, fd);
-	if (!bigger_buffer)
-		return (free(bigger_buffer), NULL);
-	line = extract_line(bigger_buffer);
-	bigger_buffer = obtain_remaining(bigger_buffer);
-	return (line);
-}
-
-#include <stdio.h>
-int	main(void)
-{
-	int	fd;
-	char	*next_line;
-	int	count;
-
-	count = 0;
-	fd = open("example.txt", O_RDONLY);
-	if (fd == -1)
-		return (printf ("Error opening file"), 1);
-	while (1)
 	{
-		next_line = get_next_line(fd);
-		if (next_line == NULL)
-			break;
-		count++;
-		printf("[%d]:%s\n", count, next_line);
-		free (next_line);
-		next_line = NULL;
+		free(leftover);
+		free(buffer);
+		leftover = NULL;
+		buffer = NULL;
+		return (NULL);
 	}
-	close(fd);
-	return(0);
+	if (!buffer)
+		return (NULL);
+	line = read_from_file(fd, leftover, buffer);
+	free(buffer);
+	buffer = NULL;
+	if (!line)
+		return (NULL);
+	leftover = set_line(line);
+	return (line);
 }
