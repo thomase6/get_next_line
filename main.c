@@ -6,12 +6,13 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 11:21:52 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/22 11:43:48 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/22 12:58:53 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+#include <fcntl.h>
 
 int main(int argc, char **argv)
 {

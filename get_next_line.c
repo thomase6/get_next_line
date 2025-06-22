@@ -6,7 +6,7 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:28:15 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/22 12:41:16 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/22 13:22:48 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,13 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*line;
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		free(leftover);
-		free(buffer);
 		leftover = NULL;
-		buffer = NULL;
 		return (NULL);
 	}
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
 	line = read_from_file(fd, leftover, buffer);

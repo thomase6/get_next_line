@@ -6,7 +6,7 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:27:14 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/22 12:42:00 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/22 13:01:54 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #  define BUFFER_SIZE 42
 # endif
 # include <unistd.h>
-# include <fcntl.h>
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
