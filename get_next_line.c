@@ -6,7 +6,7 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:28:15 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/22 13:22:48 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/22 14:47:22 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 static char	*set_line(char *line)
 {
 	char	*tmp;
-	ssize_t	i;
+	size_t	i;
 
 	i = 0;
 	while (line[i] != '\n' && line[i] != '\0')
 		i++;
-	if (line[i] == '\0' || line[i + 1] == '\0')
-		return (NULL);
-	tmp = ft_substr(line, (i + 1), (ft_strlen(line) - i));
+//	if (line[i] == '\0' || line[i + 1] == '\0')
+//		return (NULL);
+	tmp = ft_substr(line, (i + 1), (ft_strlen(line) - (i + 1)));
 	if (tmp[0] == '\0')
 	{
 		free(tmp);
@@ -60,7 +60,7 @@ static char	*read_from_file(int fd, char *leftover, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*leftover;
+	static char	*leftover = NULL;
 	char		*buffer;
 	char		*line;
 
