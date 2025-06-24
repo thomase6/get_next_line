@@ -6,7 +6,7 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:28:15 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/24 10:52:55 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:48:08 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ static char	*set_line(char *line)
 		return (NULL);
 	tmp = ft_substr(line, (i + 1), (ft_strlen(line) - (i + 1)));
 	if (!tmp)
-	{
-		free(tmp);
-		tmp = NULL;
-	}
+		return (NULL);
 	line[i + 1] = '\0';
 	return (tmp);
 }
