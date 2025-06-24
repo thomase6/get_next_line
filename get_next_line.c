@@ -6,7 +6,7 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:28:15 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/23 15:35:08 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:52:55 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ static char	*read_from_file(int fd, char *leftover, char *buffer)
 		leftover = ft_strjoin(tmp, buffer);
 		free(tmp);
 		tmp = NULL;
-		if (ft_strchr(buffer, '\n'))
+		if (!leftover)
+			return (NULL);
+		if (ft_strchr(leftover, '\n'))
 			break ;
 	}
 	return (leftover);
@@ -65,14 +67,10 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-	{
-		free(leftover);
-		leftover = NULL;
-		return (NULL);
-	}
+		return (free(leftover), leftover = NULL, NULL);
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return (free(leftover), leftover = NULL, NULL);
 	line = read_from_file(fd, leftover, buffer);
 	free(buffer);
 	buffer = NULL;

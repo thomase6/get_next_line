@@ -6,7 +6,7 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:27:39 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/22 12:44:07 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:16:05 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strchr(const char *str, int f)
 
 	c = f;
 	i = 0;
+	if (!str)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == c)
@@ -27,7 +29,7 @@ char	*ft_strchr(const char *str, int f)
 	}
 	if (str[i] == c)
 		return ((char *)&str[i]);
-	return (NULL);
+	return (0);
 }
 
 size_t	ft_strlen(const char *str)
