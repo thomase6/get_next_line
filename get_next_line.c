@@ -6,7 +6,7 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:28:15 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/24 13:25:02 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/25 07:47:14 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ char	*get_next_line(int fd)
 	if (!line)
 		return (free (line), NULL);
 	leftover = set_line(line);
+	if (!leftover)
+		free (leftover);
 	return (line);
 }
