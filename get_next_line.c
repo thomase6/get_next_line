@@ -6,7 +6,7 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:28:15 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/25 07:47:14 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/26 08:15:49 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*read_from_file(int fd, char *leftover, char *buffer)
 	ssize_t		bytes_read;
 
 	bytes_read = 1;
-	while (bytes_read > 0)
+	while (bytes_read > 0 && !ft_strchr(leftover, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
@@ -44,15 +44,15 @@ static char	*read_from_file(int fd, char *leftover, char *buffer)
 			break ;
 		buffer[bytes_read] = '\0';
 		if (!leftover)
+		{
 			leftover = ft_strdup("");
+			if (!leftover)
+				return (NULL);
+		}
 		tmp = leftover;
 		leftover = ft_strjoin(tmp, buffer);
 		free(tmp);
 		tmp = NULL;
-		if (!leftover)
-			return (NULL);
-		if (ft_strchr(leftover, '\n'))
-			break ;
 	}
 	return (leftover);
 }
@@ -72,7 +72,7 @@ char	*get_next_line(int fd)
 	free(buffer);
 	buffer = NULL;
 	if (!line)
-		return (free (line), NULL);
+		return (NULL);
 	leftover = set_line(line);
 	if (!leftover)
 		free (leftover);

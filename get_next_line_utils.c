@@ -6,7 +6,7 @@
 /*   By: texenber <texenber@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:27:39 by texenber          #+#    #+#             */
-/*   Updated: 2025/06/24 11:16:05 by texenber         ###   ########.fr       */
+/*   Updated: 2025/06/26 08:11:20 by texenber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 		i++;
 	return (i);
@@ -72,6 +74,8 @@ char	*ft_strdup(const char *str)
 	size_t	i;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	tmp = malloc((ft_strlen(str) + 1) * sizeof(char));
 	if (!tmp)
 		return (NULL);
